@@ -22,7 +22,7 @@ CardTheme cardTheme() {
         Radius.circular(8.0),
       ),
     ),
-       margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+    margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
   );
 }
 
