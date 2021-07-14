@@ -1,3 +1,4 @@
+import 'package:O2help/screen/content_detail.dart/content_detail_screen.dart';
 import 'package:O2help/screen/home/home_screen.dart';
 import 'package:O2help/screen/login/login_screen.dart';
 import 'package:O2help/screen/request/request_screen.dart';
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   TomorrowUpdateScreen.routeName: (context) => TomorrowUpdateScreen(),
   SaveScreen.routeName: (context) => SaveScreen(),
   RequestScreen.routeName: (context) => RequestScreen(),
+  ContentDetailScreen.routeName: (context) => ContentDetailScreen(),
 };
