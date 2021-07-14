@@ -9,7 +9,20 @@ ThemeData theme() {
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
     inputDecorationTheme: inputDecorationTheme(),
+    cardTheme: cardTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
+}
+
+CardTheme cardTheme() {
+  return CardTheme(
+    elevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadius.all(
+        Radius.circular(8.0),
+      ),
+    ),
+       margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
   );
 }
 
@@ -37,7 +50,7 @@ InputDecorationTheme inputDecorationTheme() {
 
 TextTheme textTheme() {
   return TextTheme(
-    headline3:TextStyle(color: kPrimaryColor),
+    headline3: TextStyle(color: kPrimaryColor),
     bodyText1: TextStyle(color: kTextColor),
     bodyText2: TextStyle(color: kTextColor),
   );

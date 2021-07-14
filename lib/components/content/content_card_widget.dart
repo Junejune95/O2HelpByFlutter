@@ -15,11 +15,6 @@ class ContentCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
-     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       child: Column(
         children: [
           Padding(
