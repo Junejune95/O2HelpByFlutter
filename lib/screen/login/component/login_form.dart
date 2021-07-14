@@ -1,5 +1,6 @@
 import 'package:O2help/components/primary_button.dart';
 import 'package:O2help/constants.dart';
+import 'package:O2help/screen/home/home_screen.dart';
 import 'package:O2help/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,21 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: 20,
             ),
-            PrimaryButton(label: 'Login')
+            PrimaryButton(
+              label: 'Login',
+              press: () {
+                        if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                // if all are valid then go to success screen
+                // KeyboardUtil.hideKeyboard(context);
+                // signIn(emailController.text, passwordController.text)
+                //     .then((value) => {
+                //           Navigator.pushNamed(context, HomeScreen.routeName),
+                //         });
+                  Navigator.pushNamed(context, HomeScreen.routeName);
+              }
+              },
+            )
           ],
         ),
       ),
