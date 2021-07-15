@@ -49,7 +49,7 @@ class ContentCardWidget extends StatelessWidget {
                     address: 'အမှတ် 17 ကျွန်းတောလမ်း စမ်းချောင်း ရန်ကုန်မြို့'),
                 SpacerWidget(),
                 PhoneNumberWidget(
-                    phoneNumber: ['+959976532391', '+959976532391']),
+                    phoneNumber: ['959977226784', '959976532391']),
                 SpacerWidget(),
                 RemarkWidget(
                   remark: 'လူကိုယ်တိုင်တန်းစီရမည်',

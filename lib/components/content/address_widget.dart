@@ -17,10 +17,12 @@ class AddressWidget extends StatelessWidget {
         SizedBox(
           width: 10,
         ),
-        Text(
-          address,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
+        Flexible(
+          child: Text(
+            address,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],

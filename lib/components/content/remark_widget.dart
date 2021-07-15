@@ -17,11 +17,13 @@ class RemarkWidget extends StatelessWidget {
       SizedBox(
         width: 10,
       ),
-      Text(
-        remark,
-        style: TextStyle(
-          color: kPrimaryColor,
-          fontWeight: FontWeight.w500,
+      Flexible(
+              child: Text(
+          remark,
+          style: TextStyle(
+            color: kPrimaryColor,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     ]);

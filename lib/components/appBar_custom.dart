@@ -1,24 +1,21 @@
-import 'package:O2help/components/appBar_custom.dart';
-import 'package:O2help/components/drawer/navigation_drawer.dart';
 import 'package:O2help/components/primary_button.dart';
-import 'package:O2help/constants.dart';
-import 'package:O2help/screen/home/component/body.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  static String routeName = "/home";
+import '../constants.dart';
 
+double _appbarHeight = 60;
+
+class AppBarCustom extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AppBarCustomState createState() => _AppBarCustomState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  double _appbarHeight = 60;
-
+class _AppBarCustomState extends State<AppBarCustom> {
   void _onSelectedMenu() {
     setState(() {
       _appbarHeight = _appbarHeight == 60 ? 320 : 60;
+      print(_appbarHeight);
     });
   }
 
@@ -28,15 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF8F7F7),
-      drawer: NavigationDrawer(),
-      appBar: buildPreferredSize(),
-      body: Body(),
-    );
-  }
-
-  PreferredSize buildPreferredSize() {
     return PreferredSize(
       preferredSize: Size.fromHeight(_appbarHeight),
       child: Column(
