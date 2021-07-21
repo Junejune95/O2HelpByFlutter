@@ -22,9 +22,37 @@ class NavigationDrawer extends StatelessWidget {
                       .map(
                         (e) => ListTile(
                           title: Text(e.getMenuLabel),
-                          leading: Icon(e.getMenuIcon),
+                          leading: e.getMenuLabel == 'Oxygen'
+                              ? ImageIcon(
+                                  AssetImage("assets/images/oxygen.png"),
+                                  color: Colors.grey,
+                                )
+                              : e.getMenuLabel == 'Flowmeter'
+                                  ? ImageIcon(
+                                      AssetImage("assets/images/flowmeter.png"),
+                                      color: Colors.grey,
+                                    )
+                                  : e.getMenuLabel == 'Oximeter'
+                                      ? ImageIcon(
+                                          AssetImage(
+                                              "assets/images/oximeter.png"),
+                                          color: Colors.grey,
+                                        )
+                                      : Icon(e.getMenuIcon),
                           onTap: () {
-                            Navigator.pushNamed(context, e.getMenuRoute);
+                            e.getMenuLabel == 'Oxygen'
+                                ? Navigator.pushNamed(context, e.getMenuRoute,
+                                    arguments: "Oxygen")
+                                : e.getMenuLabel == 'Flowmeter'
+                                    ? Navigator.pushNamed(
+                                        context, e.getMenuRoute,
+                                        arguments: "Flowmeter")
+                                    : e.getMenuLabel == 'Oximeter'
+                                        ? Navigator.pushNamed(
+                                            context, e.getMenuRoute,
+                                            arguments: "Oximeter")
+                                        : Navigator.pushNamed(
+                                            context, e.getMenuRoute);
                           },
                         ),
                       )

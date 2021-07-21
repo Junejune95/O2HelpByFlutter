@@ -5,6 +5,7 @@ import 'package:O2help/components/content/remark_widget.dart';
 import 'package:O2help/components/content/spacer_widget.dart';
 import 'package:O2help/components/content/status_box_widget.dart';
 import 'package:O2help/constants.dart';
+import 'package:O2help/models/post.model.dart';
 import 'package:flutter/material.dart';
 
 import 'address_widget.dart';
@@ -12,6 +13,8 @@ import 'info_widget.dart';
 import 'package:flutter/widgets.dart';
 
 class ContentCardWidget extends StatelessWidget {
+  final PostModel post;
+  ContentCardWidget(this.post);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,9 +26,9 @@ class ContentCardWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    StatusBoxWidget(status: '၀ယ်ရန်'),
-                    StatusBoxWidget(status: 'ငှားရန်'),
-                    StatusBoxWidget(status: 'ဖြည့်ရန်'),
+                    ...post.status
+                        .map((e) => StatusBoxWidget(status: e))
+                        .toList(),
                     Spacer(),
                     IconButton(
                       icon: Icon(Icons.bookmark_outline),
@@ -36,24 +39,24 @@ class ContentCardWidget extends StatelessWidget {
                 SpacerWidget(),
                 O2InfoWidget(
                   name: 'Plant name',
-                  size: ['အိုးကြိး', 'အိုးသေး'],
+                  size: post.size,
                   date: '10:30 AM',
                 ),
                 SpacerWidget(),
                 InfoWidget(
-                  info:
-                      'ဒီနေ့ နေ့လည် ၁၂ နာရီ ၁ နာရီလောက်မှာ စဖြည့်ပေးပါမယ်။10 L/15 L အိုးပဲ ရပါမယ် ။ကိုယ်တိုင်ဖုန်းဆက်ထားပါတယ်',
+                  info: post.information,
                 ),
                 SpacerWidget(),
-                AddressWidget(
-                    address: 'အမှတ် 17 ကျွန်းတောလမ်း စမ်းချောင်း ရန်ကုန်မြို့'),
+                AddressWidget(address: post.address),
                 SpacerWidget(),
-                PhoneNumberWidget(
-                    phoneNumber: ['959977226784', '959976532391']),
+                PhoneNumberWidget(phoneNumber: post.phoneNumber.split(',')),
                 SpacerWidget(),
-                RemarkWidget(
-                  remark: 'လူကိုယ်တိုင်တန်းစီရမည်',
-                ),
+                if (post.remark != null ||
+                    post.remark != '' ||
+                    post.remark != ' ')
+                  RemarkWidget(
+                    remark: post.remark,
+                  ),
               ],
             ),
           ),

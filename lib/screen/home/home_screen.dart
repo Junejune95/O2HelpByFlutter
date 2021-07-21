@@ -2,7 +2,9 @@ import 'package:O2help/components/appBar_custom.dart';
 import 'package:O2help/components/drawer/navigation_drawer.dart';
 import 'package:O2help/components/primary_button.dart';
 import 'package:O2help/constants.dart';
+import 'package:O2help/models/region.model.dart';
 import 'package:O2help/screen/home/component/body.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double _appbarHeight = 60;
+  String regionId = "";
+  String townshipId = "";
+  String location = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    regionId = "";
+    townshipId = "";
+  }
 
   void _onSelectedMenu() {
     setState(() {
@@ -29,11 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF8F7F7),
-      drawer: NavigationDrawer(),
-      appBar: buildPreferredSize(),
-      body: Body(),
-    );
+        backgroundColor: Color(0xFFF8F7F7),
+        drawer: NavigationDrawer(),
+        appBar: buildPreferredSize(),
+        body: Body(regionId, townshipId, false, ""));
   }
 
   PreferredSize buildPreferredSize() {
@@ -51,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'စမ်းချောင်းမြို့နယ် ရန်ကုန်',
+                    location,
                   ),
                   Text(
                     'Select Location',
@@ -68,40 +79,38 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  DropdownSearch<String>(
+                  DropdownSearch<RegionModel>(
                     mode: Mode.MENU,
-                    showSelectedItem: true,
-                    items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada'],
                     label: "Region",
-                    hint: "country in menu mode",
-                    popupItemDisabled: (String s) => s.startsWith('I'),
-                    onChanged: print,
-                    selectedItem: "Brazil",
-                    showClearButton: true,
-                    showSearchBox: true,
+                    onFind: (String filter) => getRegion(),
+                    onChanged: (data) {
+                      setState(() {
+                        regionId = data.id;
+                        location = location + " " + data.name;
+                      });
+                    },
+                    dropdownBuilder: _customDropDownExample,
+                    popupItemBuilder: _customPopupItemBuilderExample,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  DropdownSearch<String>(
+                  DropdownSearch<RegionModel>(
                     mode: Mode.MENU,
-                    showSelectedItem: true,
-                    items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada'],
-                    label: "Menu mode",
-                    hint: "country in menu mode",
-                    popupItemDisabled: (String s) => s.startsWith('I'),
-                    onChanged: print,
-                    selectedItem: "Brazil",
-                    onFind: (String filter) => getData(filter),
+                    label: "Township",
+                    onFind: (String filter) => getTownship(regionId),
+                    dropdownBuilder: _customDropDownTownExample,
+                    popupItemBuilder: _customPopupItemBuilderExample,
+                    onChanged: (data) {
+                      setState(() {
+                        townshipId = data.id;
+                        location = data.name + " " + location;
+                      });
+                    },
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  PrimaryButton(
-                    label: 'Confirm',
-                    press: () {},
-                    width: 100,
-                  )
                 ],
               ),
             )
@@ -109,4 +118,87 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget _customDropDownExample(
+    BuildContext context, RegionModel item, String gg) {
+  print(item);
+  return Container(
+    child: (item == null)
+        ? ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Text("Select Region"),
+          )
+        : ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Text(item.name),
+          ),
+  );
+}
+
+Future<List<RegionModel>> getRegion() async {
+  var response = await Dio().get(
+    "https://covid-19helpmyanmar.com/api/regions",
+  );
+  List<RegionModel> regionModelList = [];
+  response.data.forEach((val) {
+    RegionModel regionModel = RegionModel.fromJson(val);
+    regionModelList.add(regionModel);
+  });
+  if (regionModelList.length != 0) {
+    return regionModelList;
+  }
+
+  return [];
+}
+
+Future<List<RegionModel>> getTownship(regionId) async {
+  var response = await Dio().get(
+    "https://covid-19helpmyanmar.com/api/townships?regionId=" + regionId,
+  );
+  List<RegionModel> regionModelList = [];
+  print(response.data);
+  response.data.forEach((val) {
+    RegionModel regionModel = RegionModel.fromJson(val);
+    regionModelList.add(regionModel);
+  });
+  if (regionModelList.length != 0) {
+    return regionModelList;
+  }
+
+  return [];
+}
+
+Widget _customPopupItemBuilderExample(
+    BuildContext context, RegionModel item, bool isSelected) {
+  return Container(
+    margin: EdgeInsets.symmetric(horizontal: 5),
+    decoration: !isSelected
+        ? null
+        : BoxDecoration(
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.white,
+          ),
+    child: ListTile(
+      selected: isSelected,
+      title: Text(item.name ?? ''),
+    ),
+  );
+}
+
+Widget _customDropDownTownExample(
+    BuildContext context, RegionModel item, String gg) {
+  print(item);
+  return Container(
+    child: (item == null)
+        ? ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Text("Select Township"),
+          )
+        : ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Text(item.name),
+          ),
+  );
 }

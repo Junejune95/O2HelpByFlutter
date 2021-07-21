@@ -1,5 +1,6 @@
 import 'package:O2help/components/primary_button.dart';
 import 'package:O2help/screen/home/home_screen.dart';
+import 'package:O2help/services/api.services.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
@@ -32,16 +33,14 @@ class _LoginFormState extends State<LoginForm> {
             PrimaryButton(
               label: 'Login',
               press: () {
-                        if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                // KeyboardUtil.hideKeyboard(context);
-                // signIn(emailController.text, passwordController.text)
-                //     .then((value) => {
-                //           Navigator.pushNamed(context, HomeScreen.routeName),
-                //         });
-                  Navigator.pushNamed(context, HomeScreen.routeName);
-              }
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  // if all are valid then go to success screen
+                  // KeyboardUtil.hideKeyboard(context);
+                  signIn(nameController.text, phoneController.text).then(
+                      (value) =>
+                          {Navigator.pushNamed(context, HomeScreen.routeName)});
+                }
               },
             )
           ],

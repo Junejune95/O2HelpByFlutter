@@ -9,6 +9,7 @@ class RemarkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(remark + " gg ");
     return Row(children: [
       Icon(
         Icons.info_rounded,
@@ -18,7 +19,7 @@ class RemarkWidget extends StatelessWidget {
         width: 10,
       ),
       Flexible(
-              child: Text(
+        child: Text(
           remark,
           style: TextStyle(
             color: kPrimaryColor,

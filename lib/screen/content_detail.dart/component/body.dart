@@ -7,9 +7,8 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        ContentCardWidget(),
-        for(var i=0;i<20;i++)
-        CommentWidget()
+        // ContentCardWidget(),
+        for (var i = 0; i < 20; i++) CommentWidget()
       ],
     );
   }

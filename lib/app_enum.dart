@@ -4,7 +4,7 @@ import 'package:O2help/screen/save/save_screen.dart';
 import 'package:O2help/screen/tomorrow_update/tomorrow_update.dart';
 import 'package:flutter/material.dart';
 
-enum Menu { Home, TomorrowUpdate, Save, Request }
+enum Menu { Home, Oxygen, Flowmeter, Oximeter, Save, Request }
 
 extension MenuExtension on Menu {
   String get getMenuLabel {
@@ -12,8 +12,14 @@ extension MenuExtension on Menu {
       case Menu.Home:
         return 'Home';
         break;
-      case Menu.TomorrowUpdate:
-        return 'Tomorrow Update';
+      case Menu.Oxygen:
+        return 'Oxygen';
+        break;
+      case Menu.Flowmeter:
+        return 'Flowmeter';
+        break;
+      case Menu.Oximeter:
+        return 'Oximeter';
         break;
       case Menu.Save:
         return 'Save';
@@ -26,12 +32,12 @@ extension MenuExtension on Menu {
     }
   }
 
- get getMenuRoute {
+  get getMenuRoute {
     switch (this) {
       case Menu.Home:
         return HomeScreen.routeName;
         break;
-      case Menu.TomorrowUpdate:
+      case Menu.Oxygen:
         return TomorrowUpdateScreen.routeName;
         break;
       case Menu.Save:
@@ -41,16 +47,16 @@ extension MenuExtension on Menu {
         return RequestScreen.routeName;
         break;
       default:
-        return '';
+        return TomorrowUpdateScreen.routeName;
     }
   }
 
-  IconData  get getMenuIcon {
+  IconData get getMenuIcon {
     switch (this) {
       case Menu.Home:
         return Icons.home_outlined;
         break;
-      case Menu.TomorrowUpdate:
+      case Menu.Oxygen:
         return Icons.update_outlined;
         break;
       case Menu.Save:
@@ -60,7 +66,7 @@ extension MenuExtension on Menu {
         return Icons.message_outlined;
         break;
       default:
-        return null;
+        return Icons.update_outlined;
     }
   }
 }
